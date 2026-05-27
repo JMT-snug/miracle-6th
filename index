@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1학년 2반 미라클 6월 🌟</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gmarket+Sans:wght@300;500;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3B41C5;
+      --primary-glow: #6366f1;
+      --accent: #F59E0B;
+      --green: #10B981;
+      --red: #EF4444;
+      --bg: #0F0E1A;
+      --surface: #1A1928;
+      --surface2: #22203A;
+      --border: rgba(255,255,255,0.08);
+      --text: #F0EEFF;
+      --muted: #8884A8;
+      --w1: #1E1A3F;
+      --w1c: #818CF8;
+      --w2: #142E2A;
+      --w2c: #34D399;
+      --w3: #2D1E0F;
+      --w3c: #FBBF24;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── LOADING ── */
+    .loading-screen {
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:center; min-height:100vh; gap:20px; color:var(--muted);
+    }
+    .spinner {
+      width:48px; height:48px;
+      border:3px solid rgba(99,102,241,0.2);
+      border-top-color:#6366f1;
+      border-radius:50%;
+      animation:spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* ── LOGIN ── */
+    .login-screen {
+      display:flex; align-items:center; justify-content:center;
+      min-height:100vh;
+      background: radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 80%, rgba(245,158,11,0.1) 0%, transparent 60%),
+                  var(--bg);
+      padding:24px;
+    }
+    .login-card {
+      background: var(--surface);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:56px 48px;
+      text-align:center;
+      max-width:400px; width:100%;
+      position:relative;
+      overflow:hidden;
+    }
+    .login-card::before {
+      content:'';
+      position:absolute; top:-60px; left:50%;
+      transform:translateX(-50%);
+      width:200px; height:200px;
+      background:radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .login-star { font-size:64px; margin-bottom:20px; }
+    .login-title {
+      font-family:'Gmarket Sans', sans-serif;
+      font-size:32px; font-weight:700;
+      background:linear-gradient(135deg, #A5B4FC, #6366F1, #C084FC);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      margin-bottom:6px;
+    }
+    .login-sub { font-size:14px; color:var(--muted); margin-bottom:40px; }
+
+    .btn-google {
+      display:flex; align-items:center; justify-content:center; gap:12px;
+      width:100%; padding:16px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:14px;
+      color:var(--text); font-size:15px; font-weight:700;
+      cursor:pointer; transition:all 0.25s;
+      font-family:'Noto Sans KR', sans-serif;
+    }
+    .btn-google:hover {
+      background:rgba(99,102,241,0.15);
+      border-color:rgba(99,102,241,0.4);
+      transform:translateY(-2px);
+      box-shadow:0 8px 24px rgba(99,102,241,0.2);
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background:rgba(26,25,40,0.95);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:14px 24px;
+      display:flex; align-items:center; justify-content:space-between;
+      position:sticky; top:0; z-index:100;
+    }
+    .header-left { display:flex; align-items:center; gap:14px; }
+    .header-title { font-family:'Gmarket Sans',sans-serif; font-size:18px; font-weight:700; color:var(--text); }
+    .header-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+    .btn-back {
+      background:rgba(255,255,255,0.08); border:1px solid var(--border);
+      color:var(--text); border-radius:10px; padding:8px 16px;
+      cursor:pointer; font-size:13px; font-weight:700; transition:all 0.2s;
+      font-family:'Noto Sans KR',sans-serif;
+    }
+    .btn-back:hover { background:rgba(255,255,255,0.14); }
+    .header-right { display:flex; align-items:center; gap:10px; }
+    .user-avatar { width:34px; height:34px; border-radius:50%; border:2px solid rgba(99,102,241,0.5); }
+    .user-name { font-size:13px; color:var(--muted); }
+    .badge-teacher {
+      background:linear-gradient(135deg,#F59E0B,#EF4444);
+      color:white; border-radius:8px; padding:3px 10px;
+      font-size:11px; font-weight:900; letter-spacing:0.5px;
+    }
+    .btn-signout {
+      background:transparent; border:1px solid var(--border);
+      color:var(--muted); border-radius:8px; padding:6px 14px;
+      cursor:pointer; font-size:12px; transition:all 0.2s;
+      font-family:'Noto Sans KR',sans-serif;
+    }
+    .btn-signout:hover { border-color:var(--red); color:var(--red); }
+
+    /* ── MAIN PAGE ── */
+    .main-wrap { max-width:1200px; margin:0 auto; padding:32px 24px 80px; }
+
+    .section-title {
+      font-size:13px; font-weight:700; color:var(--muted);
+      text-transform:uppercase; letter-spacing:2px;
+      margin-bottom:16px; margin-top:36px;
+    }
+
+    /* Schedule */
+    .schedule-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px;
+    }
+    .schedule-item {
+      background:var(--surface); border:1px solid var(--border); border-radius:14px;
+      padding:14px 16px; border-left:3px solid var(--accent);
+      transition:all 0.2s;
+    }
+    .schedule-item:hover { background:var(--surface2); }
+    .schedule-date { font-size:11px; font-weight:700; color:var(--accent); margin-bottom:6px; }
+    .schedule-event { font-size:13px; font-weight:700; }
+
+    /* Admin Panel */
+    .admin-panel {
+      background:rgba(245,158,11,0.08);
+      border:1px dashed rgba(245,158,11,0.4);
+      border-radius:18px; padding:20px 22px; margin-bottom:8px;
+    }
+    .admin-title { font-size:12px; font-weight:900; color:#FBBF24; margin-bottom:14px; letter-spacing:1px; text-transform:uppercase; }
+    .admin-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .admin-input {
+      background:rgba(255,255,255,0.06); border:1px solid rgba(245,158,11,0.3);
+      border-radius:10px; padding:10px 14px; font-size:14px; color:var(--text);
+      flex:1; min-width:120px; font-family:'Noto Sans KR',sans-serif;
+      transition:border-color 0.2s;
+    }
+    .admin-input:focus { outline:none; border-color:#FBBF24; }
+    .admin-input::placeholder { color:var(--muted); }
+    .btn-admin {
+      background:linear-gradient(135deg,#F59E0B,#D97706); color:white;
+      border:none; border-radius:10px; padding:10px 20px;
+      font-size:13px; font-weight:700; cursor:pointer;
+      white-space:nowrap; font-family:'Noto Sans KR',sans-serif;
+      transition:opacity 0.2s;
+    }
+    .btn-admin:hover { opacity:0.85; }
+
+    /* Student Grid */
+    .student-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:14px;
+    }
+    .student-card {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:18px; padding:20px 14px; text-align:center;
+      cursor:pointer; transition:all 0.2s; position:relative;
+    }
+    .student-card:hover {
+      border-color:var(--primary-glow);
+      background:var(--surface2);
+      transform:translateY(-3px);
+      box-shadow:0 12px 32px rgba(99,102,241,0.2);
+    }
+    .student-card.is-me { border-color:var(--green); box-shadow:0 0 16px rgba(16,185,129,0.15); }
+    .student-num { font-size:11px; color:var(--muted); margin-bottom:10px; font-weight:700; }
+    .student-icon {
+      width:52px; height:52px; border-radius:50%;
+      background:linear-gradient(135deg, rgba(99,102,241,0.4), rgba(99,102,241,0.8));
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px; font-weight:900; color:white;
+      margin:0 auto 10px;
+      font-family:'Gmarket Sans',sans-serif;
+    }
+    .student-name { font-size:14px; font-weight:700; }
+    .active-dot {
+      position:absolute; top:10px; right:10px;
+      width:8px; height:8px; border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 6px var(--green);
+    }
+
+    /* ── SETUP ── */
+    .setup-wrap {
+      display:flex; align-items:center; justify-content:center;
+      min-height:calc(100vh - 64px); padding:24px;
+    }
+    .setup-card {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:24px; padding:48px; max-width:460px; width:100%; text-align:center;
+    }
+    .setup-card .em { font-size:60px; margin-bottom:18px; }
+    .setup-card h2 { font-family:'Gmarket Sans',sans-serif; font-size:24px; font-weight:700; margin-bottom:10px; }
+    .setup-card p { color:var(--muted); font-size:14px; margin-bottom:28px; line-height:1.7; }
+    .select-name {
+      width:100%; padding:13px 16px;
+      background:rgba(255,255,255,0.06); border:1px solid var(--border);
+      border-radius:12px; font-size:15px; color:var(--text);
+      font-family:'Noto Sans KR',sans-serif; margin-bottom:16px;
+      transition:border-color 0.2s;
+    }
+    .select-name:focus { outline:none; border-color:var(--primary-glow); }
+    .select-name option { background:#1A1928; }
+    .btn-primary {
+      background:linear-gradient(135deg,#4F46E5,#7C3AED); color:white;
+      border:none; border-radius:12px; padding:14px 28px;
+      font-size:15px; font-weight:700; cursor:pointer; width:100%;
+      font-family:'Noto Sans KR',sans-serif; transition:all 0.25s;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(79,70,229,0.45); }
+
+    /* ── STUDENT PAGE ── */
+    .student-wrap { max-width:1500px; margin:0 auto; padding:28px 20px 110px; }
+
+    .monthly-section {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:20px; padding:24px; margin-bottom:24px;
+    }
+    .monthly-label {
+      font-size:11px; font-weight:900; color:var(--primary-glow);
+      text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;
+    }
+    textarea.monthly-input {
+      width:100%; background:rgba(255,255,255,0.04);
+      border:1px solid var(--border); border-radius:12px;
+      padding:14px 16px; font-size:16px; font-weight:700;
+      color:var(--text); font-family:'Noto Sans KR',sans-serif;
+      resize:none; min-height:72px; transition:border-color 0.2s; line-height:1.6;
+    }
+    textarea.monthly-input:focus { outline:none; border-color:var(--primary-glow); }
+    textarea.monthly-input:disabled { opacity:0.7; cursor:default; }
+
+    /* Weeks */
+    .weeks-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+    }
+    @media (max-width:900px) { .weeks-grid { grid-template-columns:1fr; } }
+
+    .week-col {
+      border-radius:20px; padding:20px;
+      border:1px solid;
+    }
+    .week-col.w1 { background:var(--w1); border-color:rgba(129,140,248,0.2); }
+    .week-col.w2 { background:var(--w2); border-color:rgba(52,211,153,0.2); }
+    .week-col.w3 { background:var(--w3); border-color:rgba(251,191,36,0.2); }
+
+    .week-title {
+      font-family:'Gmarket Sans',sans-serif;
+      font-size:20px; font-weight:700; margin-bottom:2px;
+    }
+    .week-col.w1 .week-title { color:var(--w1c); }
+    .week-col.w2 .week-title { color:var(--w2c); }
+    .week-col.w3 .week-title { color:var(--w3c); }
+    .week-dates-label { font-size:11px; color:var(--muted); margin-bottom:14px; }
+
+    textarea.week-goal {
+      width:100%; background:rgba(0,0,0,0.25);
+      border:1px solid rgba(255,255,255,0.1); border-radius:10px;
+      padding:10px 12px; font-size:14px; font-weight:700;
+      color:var(--text); font-family:'Noto Sans KR',sans-serif;
+      resize:none; min-height:52px; margin-bottom:14px;
+      transition:border-color 0.2s; line-height:1.5;
+    }
+    textarea.week-goal:focus { outline:none; border-color:rgba(255,255,255,0.3); }
+    textarea.week-goal:disabled { opacity:0.7; cursor:default; }
+
+    /* Day Cells */
+    .day-cell {
+      background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.07);
+      border-radius:12px; padding:12px; margin-bottom:8px;
+    }
+    .day-header {
+      font-size:11px; font-weight:900; color:var(--muted);
+      text-transform:uppercase; letter-spacing:1px;
+      margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;
+    }
+    .day-cell.sat { border-color:rgba(239,68,68,0.2); }
+    .day-cell.sat .day-header { color:rgba(239,68,68,0.8); }
+
+    textarea.day-text {
+      width:100%; background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08); border-radius:8px;
+      padding:8px 10px; font-size:13px; color:var(--text);
+      font-family:'Noto Sans KR',sans-serif;
+      resize:none; min-height:54px; transition:border-color 0.2s; line-height:1.5;
+    }
+    textarea.day-text:focus { outline:none; border-color:rgba(255,255,255,0.25); }
+    textarea.day-text:disabled { opacity:0.7; cursor:default; }
+    textarea.day-text::placeholder { color:rgba(136,132,168,0.6); }
+
+    .photo-wrap { margin-top:8px; }
+    .photo-preview-img {
+      width:100%; border-radius:8px; object-fit:cover;
+      max-height:130px; margin-top:6px;
+      border:1px solid rgba(255,255,255,0.1);
+    }
+    label.btn-photo {
+      display:flex; align-items:center; justify-content:center; gap:4px;
+      width:100%; margin-top:6px; padding:6px;
+      background:rgba(255,255,255,0.04); border:1px dashed rgba(255,255,255,0.15);
+      border-radius:8px; font-size:12px; color:var(--muted);
+      cursor:pointer; transition:all 0.2s;
+    }
+    label.btn-photo:hover { border-color:var(--primary-glow); color:var(--primary-glow); }
+
+    /* Save Bar */
+    .save-bar {
+      position:fixed; bottom:24px; right:24px; z-index:200;
+    }
+    .btn-save {
+      background:linear-gradient(135deg,#4F46E5,#7C3AED); color:white;
+      border:none; border-radius:20px; padding:14px 32px;
+      font-size:15px; font-weight:900; cursor:pointer;
+      box-shadow:0 6px 28px rgba(99,102,241,0.5);
+      font-family:'Noto Sans KR',sans-serif;
+      transition:all 0.2s; letter-spacing:0.5px;
+    }
+    .btn-save:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(99,102,241,0.6); }
+    .btn-save:active { transform:translateY(0); }
+
+    /* View Mode Banner */
+    .view-banner {
+      background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.2);
+      border-radius:12px; padding:10px 16px; margin-bottom:20px;
+      font-size:13px; color:var(--green); font-weight:700;
+      display:flex; align-items:center; gap:8px;
+    }
+
+    /* Toast */
+    .toast {
+      position:fixed; bottom:80px; left:50%;
+      transform:translateX(-50%) translateY(16px);
+      background:rgba(30,28,50,0.95); backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,0.1);
+      color:var(--text); border-radius:14px;
+      padding:12px 24px; font-size:14px; font-weight:700;
+      z-index:300; opacity:0;
+      transition:opacity 0.3s, transform 0.3s;
+      white-space:nowrap; pointer-events:none;
+    }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    /* Empty */
+    .empty-state {
+      text-align:center; padding:60px; color:var(--muted);
+      grid-column:1/-1;
+    }
+    .empty-state .em { font-size:48px; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <div class="loading-screen">
+    <div class="spinner"></div>
+    <div style="font-size:14px">로딩 중...</div>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script type="module">
+  import { initializeApp }          from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut }
+                                    from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+  import { getFirestore, doc, getDoc, setDoc, collection, getDocs, query, orderBy }
+                                    from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+
+  // ============================================================
+  // 🔧 여기를 Firebase 프로젝트 값으로 교체하세요
+  // ============================================================
+  const FIREBASE_CONFIG = {
+    apiKey:            "AIzaSyBCZ8zOt6vy85QeuM2tmc1l0SbvLCgI4DI",
+    authDomain:        "project-7495985191493746478.firebaseapp.com",
+    projectId:         "project-7495985191493746478",
+    storageBucket:     "project-7495985191493746478.firebasestorage.app",
+    messagingSenderId: "677977589186",
+    appId:             "1:677977589186:web:4e7eebc230be8dad2c825b"
+  };
+
+  // 교사 이메일 도메인
+  const TEACHER_DOMAIN = 'snu-g.ms.kr';
+
+  // 6월 학사 일정 (수정 가능)
+  const JUNE_SCHEDULE = [
+    { date:'6/1 (월)',  event:'🚀 미라클 6월 시작' },
+    { date:'6/6 (토)',  event:'🇰🇷 현충일 (휴일)' },
+    { date:'6/7 (토)',  event:'📝 1주차 반성' },
+    { date:'6/14 (토)', event:'📝 2주차 반성' },
+    { date:'6/21 (토)', event:'📝 3주차 반성' },
+    { date:'6/30 (월)', event:'🎉 미라클 6월 마무리' },
+  ];
+
+  // 주차 정보
+  const WEEKS = [
+    { num:1, label:'1주차', dates:'6/1 ~ 6/7',  cls:'w1', color:'#818CF8' },
+    { num:2, label:'2주차', dates:'6/8 ~ 6/14', cls:'w2', color:'#34D399' },
+    { num:3, label:'3주차', dates:'6/15 ~ 6/21',cls:'w3', color:'#FBBF24' },
+  ];
+
+  // 요일 목록
+  const DAYS = [
+    { key:'mon', label:'MON 월', sat:false },
+    { key:'tue', label:'TUE 화', sat:false },
+    { key:'wed', label:'WED 수', sat:false },
+    { key:'thu', label:'THU 목', sat:false },
+    { key:'fri', label:'FRI 금', sat:false },
+    { key:'sat', label:'SAT 토 — 주차 반성', sat:true },
+  ];
+
+  // ============================================================
+  // Firebase 초기화
+  // ============================================================
+  const fbApp    = initializeApp(FIREBASE_CONFIG);
+  const auth     = getAuth(fbApp);
+  const db       = getFirestore(fbApp);
+  const GAS_URL  = 'https://script.google.com/a/macros/snu-g.ms.kr/s/AKfycbwwamPrgkFRnsZDYKkeZX-kof8_9M0neLfgpE2c5O4Bdc-p-0oSsvKGwIaLCBV9g_nt1A/exec';
+  const gProvider = new GoogleAuthProvider();
+
+  let currentUser  = null;
+  let userProfile  = null;
+  let studentList  = [];
+  let sessionData  = {};
+
+  // ============================================================
+  // 유틸리티
+  // ============================================================
+  function isTeacher(u) {
+    return u && u.email && u.email.endsWith('@' + TEACHER_DOMAIN);
+  }
+
+  function canEdit(studentId) {
+    if (!currentUser) return false;
+    if (isTeacher(currentUser)) return true;
+    return userProfile?.studentId === studentId;
+  }
+
+  let toastTimer = null;
+  function showToast(msg, duration = 2600) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), duration);
+  }
+
+  function setApp(html) { document.getElementById('app').innerHTML = html; }
+
+  function autoResize(ta) {
+    ta.style.height = 'auto';
+    ta.style.height = ta.scrollHeight + 'px';
+  }
+
+  function initAutoResize() {
+    document.querySelectorAll('textarea').forEach(ta => {
+      ta.addEventListener('input', () => autoResize(ta));
+      autoResize(ta);
+    });
+  }
+
+  // ============================================================
+  // Firestore / Storage 헬퍼
+  // ============================================================
+  async function loadStudents() {
+    try {
+      const snap = await getDocs(query(collection(db, 'students'), orderBy('number')));
+      studentList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch { studentList = []; }
+    return studentList;
+  }
+
+  async function loadGoals(studentId) {
+    const snap = await getDoc(doc(db, 'goals', studentId));
+    return snap.exists() ? snap.data() : {};
+  }
+
+  async function saveGoals(studentId, data) {
+    await setDoc(doc(db, 'goals', studentId), data);
+  }
+
+  // 이미지 압축 (업로드 전 용량 절약)
+  function compressImage(file, maxWidth = 1000, quality = 0.75) {
+    return new Promise(resolve => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const scale   = Math.min(1, maxWidth / img.width);
+        const canvas  = document.createElement('canvas');
+        canvas.width  = img.width  * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(resolve, 'image/jpeg', quality);
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    });
+  }
+
+  // Google Drive(GAS) 업로드
+  async function uploadPhoto(studentId, week, dayKey, file) {
+    const compressed = await compressImage(file);
+
+    const base64 = await new Promise((resolve, reject) => {
+      const reader  = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(compressed);
+    });
+
+    const res  = await fetch(GAS_URL, {
+      method: 'POST',
+      body:   JSON.stringify({
+        image:    base64,
+        filename: `${studentId}_w${week}_${dayKey}_${Date.now()}.jpg`,
+        mimeType: 'image/jpeg'
+      })
+    });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    return json.url;
+  }
+
+  // ============================================================
+  // ── 화면: 로그인 ──
+  // ============================================================
+  function renderLogin() {
+    setApp(`
+      <div class="login-screen">
+        <div class="login-card">
+          <div class="login-star">🌟</div>
+          <div class="login-title">미라클 6월</div>
+          <div class="login-sub">1학년 2반 · 2026년 6월 목표 관리</div>
+          <button class="btn-google" id="btnLogin">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Google 계정으로 로그인
+          </button>
+        </div>
+      </div>
+    `);
+    document.getElementById('btnLogin').addEventListener('click', async () => {
+      try { await signInWithPopup(auth, gProvider); }
+      catch (e) { showToast('로그인 실패: ' + e.message); }
+    });
+  }
+
+  // ============================================================
+  // ── 화면: 이름 선택 (최초 1회) ──
+  // ============================================================
+  async function renderSetup() {
+    await loadStudents();
+    const available = studentList.filter(s => !s.uid);
+
+    setApp(`
+      <div class="header">
+        <div class="header-left">
+          <div>
+            <div class="header-title">🌟 미라클 6월</div>
+            <div class="header-sub">1학년 2반</div>
+          </div>
+        </div>
+        <div class="header-right">
+          <button class="btn-signout" id="btnSignout0">로그아웃</button>
+        </div>
+      </div>
+      <div class="setup-wrap">
+        <div class="setup-card">
+          <div class="em">👋</div>
+          <h2>처음 오셨군요!</h2>
+          <p>
+            <strong>${currentUser.displayName}</strong>님,<br>
+            반에서 <strong>내 이름</strong>을 선택해주세요.<br>
+            한 번만 설정하면 다음부터 자동 로그인됩니다.
+          </p>
+          <select class="select-name" id="selStudent">
+            <option value="">-- 내 이름 선택 --</option>
+            ${available.map(s =>
+              `<option value="${s.id}">${s.number}번 ${s.name}</option>`
+            ).join('')}
+          </select>
+          <button class="btn-primary" id="btnConfirm">확인</button>
+        </div>
+      </div>
+    `);
+
+    document.getElementById('btnSignout0').addEventListener('click', () => signOut(auth));
+
+    document.getElementById('btnConfirm').addEventListener('click', async () => {
+      const sel = document.getElementById('selStudent').value;
+      if (!sel) { showToast('이름을 선택해주세요'); return; }
+
+      const student = studentList.find(s => s.id === sel);
+      userProfile = { studentId: sel, name: student.name, role: 'student' };
+
+      await setDoc(doc(db, 'users', currentUser.uid), userProfile);
+      await setDoc(doc(db, 'students', sel), { uid: currentUser.uid }, { merge: true });
+
+      await loadStudents();
+      renderMain();
+    });
+  }
+
+  // ============================================================
+  // ── 화면: 메인 (학생 목록) ──
+  // ============================================================
+  async function renderMain() {
+    const teacher = isTeacher(currentUser);
+    await loadStudents();
+
+    setApp(`
+      <div class="header">
+        <div class="header-left">
+          <div>
+            <div class="header-title">🌟 미라클 6월</div>
+            <div class="header-sub">1학년 2반 · 2026년 6월</div>
+          </div>
+          ${teacher ? '<span class="badge-teacher">교사</span>' : ''}
+        </div>
+        <div class="header-right">
+          ${currentUser.photoURL
+            ? `<img class="user-avatar" src="${currentUser.photoURL}" referrerpolicy="no-referrer">`
+            : ''}
+          <span class="user-name">${teacher ? currentUser.displayName : (userProfile?.name || '')}</span>
+          <button class="btn-signout" id="btnSignout">로그아웃</button>
+        </div>
+      </div>
+
+      <div class="main-wrap">
+        ${teacher ? `
+          <div class="section-title">🔧 교사 관리 — 학생 추가</div>
+          <div class="admin-panel" style="margin-bottom:0">
+            <div class="admin-title">학생 추가 (한 명씩)</div>
+            <div class="admin-row">
+              <input class="admin-input" id="adminNum" type="number" placeholder="출석번호" min="1" max="40">
+              <input class="admin-input" id="adminName" placeholder="학생 이름">
+              <button class="btn-admin" id="btnAdd">+ 추가</button>
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="section-title">📅 6월 주요 일정</div>
+        <div class="schedule-grid">
+          ${JUNE_SCHEDULE.map(s => `
+            <div class="schedule-item">
+              <div class="schedule-date">${s.date}</div>
+              <div class="schedule-event">${s.event}</div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="section-title">👥 우리 반 친구들</div>
+        <div class="student-grid" id="studentGrid">
+          ${renderCards()}
+        </div>
+      </div>
+    `);
+
+    document.getElementById('btnSignout').addEventListener('click', () => signOut(auth));
+
+    if (teacher) {
+      document.getElementById('btnAdd').addEventListener('click', async () => {
+        const num  = parseInt(document.getElementById('adminNum').value);
+        const name = document.getElementById('adminName').value.trim();
+        if (!num || !name) { showToast('번호와 이름을 입력해주세요'); return; }
+        const id = 'student_' + String(num).padStart(2, '0');
+        await setDoc(doc(db, 'students', id), { number: num, name, uid: null });
+        showToast(`${name} 학생 추가됨 ✓`);
+        document.getElementById('adminNum').value  = '';
+        document.getElementById('adminName').value = '';
+        await loadStudents();
+        document.getElementById('studentGrid').innerHTML = renderCards();
+        attachCards();
+      });
+    }
+
+    attachCards();
+  }
+
+  function renderCards() {
+    if (!studentList.length) {
+      return `<div class="empty-state"><div class="em">👥</div>
+        ${isTeacher(currentUser) ? '위 패널에서 학생을 추가해주세요.' : '학생 목록이 없습니다.'}
+      </div>`;
+    }
+    return studentList.map(s => {
+      const isMe = userProfile?.studentId === s.id;
+      return `
+        <div class="student-card${isMe ? ' is-me' : ''}" data-sid="${s.id}">
+          ${s.uid ? '<div class="active-dot"></div>' : ''}
+          <div class="student-num">${s.number}번</div>
+          <div class="student-icon">${s.name.charAt(0)}</div>
+          <div class="student-name">${s.name}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function attachCards() {
+    document.querySelectorAll('.student-card').forEach(card =>
+      card.addEventListener('click', () => renderStudentPage(card.dataset.sid))
+    );
+  }
+
+  // ============================================================
+  // ── 화면: 학생 개별 페이지 ──
+  // ============================================================
+  async function renderStudentPage(studentId) {
+    const student = studentList.find(s => s.id === studentId);
+    if (!student) { showToast('학생 정보를 찾을 수 없습니다'); return; }
+
+    const editable = canEdit(studentId);
+    const goals    = await loadGoals(studentId);
+    sessionData    = JSON.parse(JSON.stringify(goals));
+
+    const weeksHtml = WEEKS.map(wk => {
+      const wData = goals[`week${wk.num}`] || {};
+
+      const daysHtml = DAYS.map(day => {
+        const cell = wData[day.key] || {};
+        return `
+          <div class="day-cell${day.sat ? ' sat' : ''}">
+            <div class="day-header">
+              <span>${day.label}</span>
+              ${editable ? `
+                <label class="btn-photo" style="width:auto;padding:2px 8px;margin:0">
+                  📷
+                  <input type="file" accept="image/*" style="display:none"
+                    class="photo-file" data-w="${wk.num}" data-d="${day.key}">
+                </label>
+              ` : ''}
+            </div>
+            <textarea class="day-text"
+              data-w="${wk.num}" data-d="${day.key}"
+              placeholder="${day.sat ? '이번 주를 돌아보며...' : '오늘의 목표를 적어요'}"
+              ${editable ? '' : 'disabled'}>${cell.text || ''}</textarea>
+            <div class="photo-wrap" id="photo-${wk.num}-${day.key}">
+              ${cell.photoURL
+                ? `<img class="photo-preview-img" src="${cell.photoURL}" alt="사진">`
+                : (editable ? `<label class="btn-photo" style="cursor:pointer">
+                    📷 사진 추가
+                    <input type="file" accept="image/*" style="display:none"
+                      class="photo-file" data-w="${wk.num}" data-d="${day.key}">
+                   </label>` : '')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="week-col ${wk.cls}">
+          <div class="week-title">${wk.label}</div>
+          <div class="week-dates-label">${wk.dates}</div>
+          <textarea class="week-goal"
+            data-w="${wk.num}"
+            placeholder="${wk.label} 목표를 입력하세요"
+            ${editable ? '' : 'disabled'}>${wData.goal || ''}</textarea>
+          ${daysHtml}
+        </div>
+      `;
+    }).join('');
+
+    setApp(`
+      <div class="header">
+        <div class="header-left">
+          <button class="btn-back" id="btnBack">← 목록</button>
+          <div>
+            <div class="header-title">${student.name} · 미라클 6월</div>
+            <div class="header-sub">
+              ${editable
+                ? (isTeacher(currentUser) ? '🔧 교사 수정 모드' : '✏️ 내 페이지')
+                : '👁 열람 모드'}
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          ${currentUser.photoURL
+            ? `<img class="user-avatar" src="${currentUser.photoURL}" referrerpolicy="no-referrer">`
+            : ''}
+          <button class="btn-signout" id="btnSignout2">로그아웃</button>
+        </div>
+      </div>
+
+      <div class="student-wrap">
+        ${!editable
+          ? '<div class="view-banner">👁 열람 전용 — 수정하려면 자신의 페이지로 이동하세요.</div>'
+          : ''}
+
+        <div class="monthly-section">
+          <div class="monthly-label">🎯 6월의 목표</div>
+          <textarea class="monthly-input" id="monthlyGoal"
+            placeholder="이번 6월에 이루고 싶은 목표를 적어보세요"
+            ${editable ? '' : 'disabled'}>${goals.monthlyGoal || ''}</textarea>
+        </div>
+
+        <div class="weeks-grid">
+          ${weeksHtml}
+        </div>
+      </div>
+
+      ${editable ? `
+        <div class="save-bar">
+          <button class="btn-save" id="btnSave">💾 저장하기</button>
+        </div>
+      ` : ''}
+    `);
+
+    initAutoResize();
+
+    document.getElementById('btnBack').addEventListener('click', renderMain);
+    document.getElementById('btnSignout2').addEventListener('click', () => signOut(auth));
+
+    if (!editable) return;
+
+    // ── 사진 업로드 ──
+    document.querySelectorAll('.photo-file').forEach(input => {
+      input.addEventListener('change', async () => {
+        const file = input.files[0];
+        if (!file) return;
+        const w = input.dataset.w;
+        const d = input.dataset.d;
+
+        showToast('사진 업로드 중... ⏳', 8000);
+        try {
+          const url = await uploadPhoto(studentId, w, d, file);
+
+          // sessionData 갱신
+          if (!sessionData[`week${w}`])        sessionData[`week${w}`]        = {};
+          if (!sessionData[`week${w}`][d])      sessionData[`week${w}`][d]      = {};
+          sessionData[`week${w}`][d].photoURL = url;
+
+          // UI 갱신
+          const wrap = document.getElementById(`photo-${w}-${d}`);
+          if (wrap) {
+            wrap.innerHTML = `<img class="photo-preview-img" src="${url}" alt="사진">`;
+          }
+          showToast('사진 업로드 완료 ✓');
+        } catch (err) {
+          showToast('업로드 실패: ' + err.message);
+        }
+      });
+    });
+
+    // ── 저장 ──
+    document.getElementById('btnSave').addEventListener('click', async () => {
+      const saveData = {};
+
+      // 6월 목표
+      saveData.monthlyGoal = document.getElementById('monthlyGoal').value;
+
+      for (const wk of WEEKS) {
+        const wKey = `week${wk.num}`;
+        saveData[wKey] = {};
+
+        // 주차 목표
+        const wGoal = document.querySelector(`.week-goal[data-w="${wk.num}"]`);
+        saveData[wKey].goal = wGoal ? wGoal.value : '';
+
+        // 일별 셀
+        for (const day of DAYS) {
+          const existing = sessionData[wKey]?.[day.key] || {};
+          const ta       = document.querySelector(`.day-text[data-w="${wk.num}"][data-d="${day.key}"]`);
+          saveData[wKey][day.key] = {
+            text:     ta ? ta.value : (existing.text || ''),
+            photoURL: existing.photoURL || ''   // 업로드 핸들러에서 이미 반영됨
+          };
+        }
+      }
+
+      try {
+        await saveGoals(studentId, saveData);
+        sessionData = JSON.parse(JSON.stringify(saveData));
+        showToast('저장 완료 ✓');
+      } catch (err) {
+        showToast('저장 실패: ' + err.message);
+      }
+    });
+  }
+
+  // ============================================================
+  // 앱 시작 — Auth 상태 감시
+  // ============================================================
+  onAuthStateChanged(auth, async user => {
+    if (!user) {
+      currentUser = null; userProfile = null;
+      renderLogin();
+      return;
+    }
+
+    currentUser = user;
+
+    if (isTeacher(user)) {
+      userProfile = { role: 'teacher' };
+      await loadStudents();
+      renderMain();
+    } else {
+      try {
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        userProfile = snap.exists() ? snap.data() : null;
+      } catch { userProfile = null; }
+
+      if (!userProfile?.studentId) {
+        renderSetup();
+      } else {
+        await loadStudents();
+        renderMain();
+      }
+    }
+  });
+</script>
+</body>
+</html>

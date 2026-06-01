@@ -292,7 +292,7 @@ async function uploadPhoto(sid,week,day,file){
     r.onload=()=>res(r.result.split(',')[1]); r.onerror=rej;
     r.readAsDataURL(c);
   });
-  const resp=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({idToken:await currentUser.getIdToken(),
+  const resp=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({secret:'miracle-june-2026',
     image:b64, filename:`${sid}_w${week}_${day}_${Date.now()}.jpg`, mimeType:'image/jpeg'
   })});
   const j=await resp.json();

@@ -175,7 +175,8 @@ const FIREBASE_CONFIG = {
 const TEACHER_EMAILS = [
   'rapidwing@snu-g.ms.kr',
 ];
-const GAS_URL = 'https://script.google.com/a/macros/snu-g.ms.kr/s/AKfycbwwamPrgkFRnsZDYKkeZX-kof8_9M0neLfgpE2c5O4Bdc-p-0oSsvKGwIaLCBV9g_nt1A/exec';
+// 재배포 후 새 URL로 교체 (script.google.com/macros/s/.../exec 형태)
+const GAS_URL = 'https://script.google.com/a/macros/snu-g.ms.kr/s/AKfycbypWVYk7xFFyqE77IbHh0wqJv8fSKSqwnUKCIrUxFhHxP11yXWyApZ-wCU6x7jvqQP0Gw/exec';
 
 // ── 달력 데이터 ──────────────────────────────────────────────
 // June 2026: 6/1 = 월요일 → 일~토 형식
@@ -291,7 +292,7 @@ async function uploadPhoto(sid,week,day,file){
     r.onload=()=>res(r.result.split(',')[1]); r.onerror=rej;
     r.readAsDataURL(c);
   });
-  const resp=await fetch(GAS_URL,{method:'POST',body:JSON.stringify({
+  const resp=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({idToken:await currentUser.getIdToken(),
     image:b64, filename:`${sid}_w${week}_${day}_${Date.now()}.jpg`, mimeType:'image/jpeg'
   })});
   const j=await resp.json();

@@ -486,6 +486,28 @@ async function renderStudentPage(sid){
   const goals=await loadGoals(sid);
   sessionData=JSON.parse(JSON.stringify(goals));
 
+  // 교사 코멘트 HTML 사전 계산
+  const _cmts=goals.comments||{};
+  const _isT=isTeacher(currentUser);
+  const _fmt=d=>d?new Date(d).toLocaleString('ko-KR',{month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+  const _items=CMT_KEYS.map(c=>{
+    const cm=_cmts[c.key]||{};
+    if(!_isT&&!(cm.text&&cm.text.trim()))return '';
+    return '<div class="comment-item">'
+      +'<div class="comment-label"><span>'+c.label+'</span>'
+      +(cm.updatedAt?'<span class="comment-date">'+_fmt(cm.updatedAt)+'</span>':'')
+      +'</div>'
+      +'<textarea class="comment-input" id="cmt-'+c.key+'"'
+      +' placeholder="'+(_isT?c.label+' 코멘트를 입력하세요':'')+'"'
+      +(_isT?'':' disabled')+'>'+( cm.text||'')+'</textarea>'
+      +'</div>';
+  }).join('');
+  const commentHtml='<div class="comment-section">'
+    +'<div class="comment-title">💬 교사 코멘트</div>'
+    +(_items||(!_isT?'<div class="comment-empty">아직 코멘트가 없습니다.</div>':''))
+    +(_isT?'<button class="btn-comment-save" id="btnCS">💬 코멘트 저장</button>':'')
+    +'</div>';
+
   const weeksHtml=WEEKS.map(wk=>{
     const wD=goals[`week${wk.num}`]||{};
     const daysHtml=DAYS.map(day=>{
@@ -544,33 +566,7 @@ async function renderStudentPage(sid){
           ${editable?'':'disabled'}>${goals.monthlyGoal||''}</textarea>
       </div>
       <div class="weeks-grid">${weeksHtml}</div>
-
-      <!-- 교사 코멘트 -->
-      ${(()=>{
-        const cmts=goals.comments||{};
-        const teacher2=isTeacher(currentUser);
-        const fmt=d=>d?new Date(d).toLocaleString('ko-KR',{month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
-        const items=CMT_KEYS.map(c=>{
-          const cm=cmts[c.key]||{};
-          const hasText=cm.text&&cm.text.trim();
-          if(!teacher2&&!hasText)return '';
-          return \`<div class="comment-item">
-            <div class="comment-label">
-              <span>\${c.label}</span>
-              \${cm.updatedAt?\`<span class="comment-date">\${fmt(cm.updatedAt)}</span>\`:''}
-            </div>
-            <textarea class="comment-input" id="cmt-\${c.key}"
-              placeholder="\${teacher2?c.label+' 코멘트를 입력하세요':''}"
-              \${teacher2?'':'disabled'}>\${cm.text||''}</textarea>
-          </div>\`;
-        }).join('');
-        const hasAny=Object.values(cmts).some(c=>c.text&&c.text.trim());
-        return \`<div class="comment-section">
-          <div class="comment-title">💬 교사 코멘트</div>
-          \${items||(!teacher2?'<div class="comment-empty">아직 코멘트가 없습니다.</div>':'')}
-          \${teacher2?'<button class="btn-comment-save" id="btnCS">💬 코멘트 저장</button>':''}
-        </div>\`;
-      })()}
+      ${commentHtml}
     </div>
     ${editable?'<div class="save-bar"><button class="btn-save" id="bSv">💾 저장하기</button></div>':''}
 
